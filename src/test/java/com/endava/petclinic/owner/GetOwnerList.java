@@ -1,7 +1,6 @@
 package com.endava.petclinic.owner;
 
 import com.endava.petclinic.TestBaseClass;
-import com.endava.petclinic.client.OwnerClient;
 import com.endava.petclinic.model.Owner;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;

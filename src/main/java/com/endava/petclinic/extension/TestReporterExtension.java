@@ -19,7 +19,6 @@ public class TestReporterExtension implements BeforeTestExecutionCallback, After
     @Override
     public void beforeTestExecution(ExtensionContext extensionContext) {
         LOGGER.info("Starting test {}/{}", extensionContext.getTestClass().get().getSimpleName(), extensionContext.getTestMethod().get().getName());
-
     }
 
     @Override
