@@ -11,7 +11,10 @@ import io.restassured.specification.FilterableResponseSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 public class LogFilter implements Filter {
 
@@ -24,7 +27,7 @@ public class LogFilter implements Filter {
         PrintStream stream = new PrintStream(outputStream);
 
         //print request
-        RequestPrinter.print(requestSpec, requestSpec.getMethod(),requestSpec.getURI(), LogDetail.ALL,
+        RequestPrinter.print(requestSpec, requestSpec.getMethod(), requestSpec.getURI(), LogDetail.ALL,
                 requestSpec.getConfig().getLogConfig().blacklistedHeaders(), stream, true);
 
         //send request to server and get response
@@ -38,7 +41,7 @@ public class LogFilter implements Filter {
         }
 
         //print response
-        ResponsePrinter.print(response, response.body(),stream, LogDetail.ALL, true,
+        ResponsePrinter.print(response, response.body(), stream, LogDetail.ALL, true,
                 requestSpec.getConfig().getLogConfig().blacklistedHeaders());
 
         //print info to logger

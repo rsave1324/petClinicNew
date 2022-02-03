@@ -8,25 +8,30 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
-public class DeletePetTest extends TestBaseClass {
+import static io.restassured.RestAssured.withArgs;
+import static org.hamcrest.Matchers.is;
+
+public class GetPetListTest extends TestBaseClass {
 
     @Test
-    public void shouldDeletePet() {
-        //GIVEN
+    public void shouldGetPetList() {
         Owner owner = petClinicFixture.createOwner()
                 .getOwner();
 
         PetType petType = petClinicFixture.createPetType()
                 .getPetType();
 
-        Pet pet = petClinicFixture.createPet(owner, petType).getPet();
+        Pet pet = petClinicFixture.createPet(owner, petType)
+                .getPet();
         Long petId = pet.getId();
 
         //WHEN
-        Response response = petClient.deletePetById(petId);
+        Response response = petClient.getPetList();
 
         //THEN
-        response.then()
-                .statusCode(HttpStatus.SC_NO_CONTENT);
+        response
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .body("find{ it -> it.id == %s}.name", withArgs(petId), is(pet.getName()));
     }
 }

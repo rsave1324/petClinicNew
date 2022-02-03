@@ -1,17 +1,18 @@
-package com.endava.petclinic.pet;
+package com.endava.petclinic.visit;
 
 import com.endava.petclinic.TestBaseClass;
 import com.endava.petclinic.model.Owner;
 import com.endava.petclinic.model.Pet;
 import com.endava.petclinic.model.PetType;
+import com.endava.petclinic.model.Visit;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
-public class DeletePetTest extends TestBaseClass {
+public class DeleteVisitTest extends TestBaseClass {
 
     @Test
-    public void shouldDeletePet() {
+    public void shouldDeleteVisit() {
         //GIVEN
         Owner owner = petClinicFixture.createOwner()
                 .getOwner();
@@ -19,11 +20,15 @@ public class DeletePetTest extends TestBaseClass {
         PetType petType = petClinicFixture.createPetType()
                 .getPetType();
 
-        Pet pet = petClinicFixture.createPet(owner, petType).getPet();
-        Long petId = pet.getId();
+        Pet pet = petClinicFixture.createPet(owner, petType)
+                .getPet();
+
+        Visit visit = petClinicFixture.createVisit(pet)
+                .getVisit();
+        Long visitId = visit.getId();
 
         //WHEN
-        Response response = petClient.deletePetById(petId);
+        Response response = visitClient.deleteVisitById(visitId);
 
         //THEN
         response.then()

@@ -11,10 +11,9 @@ public class DeleteOwnerTest extends TestBaseClass {
     @Test
     public void shouldDeleteOwner() {
         //GIVEN
-        Owner owner = testDataProvider.getOwner();
-        Response createOwnerResponse = ownerClient.createOwner(owner);
-        createOwnerResponse.then().statusCode(HttpStatus.SC_CREATED);
-        Long ownerId = createOwnerResponse.body().jsonPath().getLong("id");
+        Owner owner = petClinicFixture.createOwner()
+                .getOwner();
+        Long ownerId = owner.getId();
 
         //WHEN
         Response response1 = ownerClient.deleteOwnerById(ownerId);

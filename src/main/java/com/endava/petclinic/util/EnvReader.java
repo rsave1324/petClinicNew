@@ -10,7 +10,7 @@ public class EnvReader {
 
     static {
         String env = System.getProperty("env");
-        InputStream resourceAsStream = EnvReader.class.getClassLoader().getResourceAsStream("env/"+env+".properties");
+        InputStream resourceAsStream = EnvReader.class.getClassLoader().getResourceAsStream("env/" + env + ".properties");
         try {
             properties.load(resourceAsStream);
         } catch (IOException e) {
@@ -36,5 +36,17 @@ public class EnvReader {
 
     public static String getAdminPassword() {
         return properties.getProperty("admin.password");
+    }
+
+    public static String getDBUrl() {
+        return properties.getProperty("db.url");
+    }
+
+    public static String getDBUsername() {
+        return properties.getProperty("db.username");
+    }
+
+    public static String getDBPassword() {
+        return properties.getProperty("db.password");
     }
 }

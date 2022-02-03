@@ -3,6 +3,7 @@ package com.endava.petclinic.testData;
 import com.endava.petclinic.model.Owner;
 import com.endava.petclinic.model.Pet;
 import com.endava.petclinic.model.PetType;
+import com.endava.petclinic.model.Visit;
 import com.github.javafaker.Faker;
 
 import java.time.ZoneId;
@@ -38,9 +39,20 @@ public class TestDataProvider {
 
     public PetType getPetType() {
         PetType petType = new PetType();
-        petType.setName(faker.name().firstName());
+        petType.setName(faker.animal().name());
 
         return petType;
+    }
+
+    public Visit getVisit(Pet pet) {
+        String visitDate = faker.date().birthday().toInstant().atZone(ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        Visit visit = new Visit();
+        visit.setDescription(faker.medical().diseaseName());
+        visit.setDate(visitDate);
+        visit.setPet(pet);
+
+        return visit;
     }
 
     public String getNumberWithDigits(int min, int max) {

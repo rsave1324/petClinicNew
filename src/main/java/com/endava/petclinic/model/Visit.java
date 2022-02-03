@@ -1,18 +1,24 @@
 package com.endava.petclinic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class PetType {
+public class Visit {
 
     @EqualsAndHashCode.Exclude
     private Long id;
     @NonNull
-    private String name;
+    private String description;
+    @NonNull
+    private String date;
+    @NonNull
+    private Pet pet;
 
     @Override
     public String toString() {
@@ -22,6 +28,6 @@ public class PetType {
         } catch (JsonProcessingException e) {
             return super.toString();
         }
+
     }
 }
-

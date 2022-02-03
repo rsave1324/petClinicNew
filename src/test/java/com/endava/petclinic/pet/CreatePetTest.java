@@ -13,14 +13,12 @@ public class CreatePetTest extends TestBaseClass {
     @Test
     public void shouldCreatePetGivenValidData() {
         //GIVEN
-        Owner owner = testDataProvider.getOwner();
-        Response responseOwner = ownerClient.createOwner(owner);
-        responseOwner.then().statusCode(HttpStatus.SC_CREATED);
-        long id = responseOwner.body().jsonPath().getLong("id");
-        owner.setId(id);
+        Owner owner = petClinicFixture.createOwner()
+                .getOwner();
 
-        PetType petType = new PetType();
-        petType.setId(1L);
+        PetType petType = petClinicFixture.createPetType()
+                .getPetType();
+
         Pet pet =testDataProvider.getPet(owner, petType);
 
         //WHEN
@@ -28,18 +26,19 @@ public class CreatePetTest extends TestBaseClass {
 
         //THEN
         response.then().statusCode(HttpStatus.SC_CREATED);
+
+        Long id = response.body().jsonPath().getLong("id");
     }
 
     @Test
     public void shouldFailCreatePetGivenEmptyName() {
         //GIVEN
-        Owner owner = testDataProvider.getOwner();
-        Response responseOwner = ownerClient.createOwner(owner);
-        responseOwner.then().statusCode(HttpStatus.SC_CREATED);
-        long id = responseOwner.body().jsonPath().getLong("id");
-        owner.setId(id);
-        PetType petType = new PetType();
-        petType.setId(3L);
+        Owner owner = petClinicFixture.createOwner()
+                .getOwner();
+
+        PetType petType = petClinicFixture.createPetType()
+                .getPetType();
+
         Pet pet =testDataProvider.getPet(owner, petType);
         pet.setName("");
 
